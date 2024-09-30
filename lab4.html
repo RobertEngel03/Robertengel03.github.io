@@ -1,0 +1,64 @@
+<DOCTYPE html>
+<html>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lab3.html">Lab3</a>
+            </li>
+            <li>
+                <a class="nav-link"href="lab4.html">lab4</a>
+            </li>
+            
+        </div>
+      </nav>
+      
+<head>
+    <title>Store Simulator!</title>
+    <script>
+        var name;
+        now  = new Date();
+        hour = now.getHours();
+        window.alert("Welcome To My Store ")
+
+        name = window.prompt("Please enter your Name " , "name");
+        if(hour < 12){
+            document.write("<h1> Good Morning")
+        }else if(hour < 18){
+            document.write("<h1> Good Afternoon")
+        }else{
+            document.write("<h1> Good evening")
+        }
+        document.writeln(name + ", Welcome to My Store!</h1>")
+
+        var order;
+        order= window.prompt("What Would You like To Order :)" , "")
+
+        var numofitems;
+        numofitems= window,prompt("How Many"+order+"do you want" , "")
+
+       document.writeln("You Ordered: " + numOfItems+ " " +order)
+
+        let currentDate =new Date();
+
+
+        now=new Date();
+        now.setDate(now.getDate()+7);
+        document.writeln("Your order will arrive on"+now);
+
+        
+
+
+
+
+    </script>
+</head>
+
+</html>
