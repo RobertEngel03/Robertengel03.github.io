@@ -34,17 +34,17 @@
         }else if(hour < 18){
             document.write("<h1> Good Afternoon")
         }else{
-            document.write("<h1> Good evening")
+            document.write("<h1> Good Evening")
         }
         document.writeln(name + ", Welcome to My Store!</h1>")
 
         var order;
-        order= window.prompt("What Would You like To Order :)" , "")
+        order = window.prompt("What Would You like To Order :)" , "")
 
         var numofitems;
-        numofitems= window,prompt("How Many"+order+"do you want" , "")
+        numofitems= window.prompt("How Many"+order+"do you want" , "")
 
-        document.writeln("You ordered"+""+numofitems+ "" +order)
+        document.writeln(name+ "You ordered "+ numofitems + order);
 
         let currentDate =new Date();
 
