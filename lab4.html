@@ -42,9 +42,18 @@
         order = window.prompt("What Would You like To Order :)" , "")
 
         var numofitems;
-        numofitems= window.prompt("How Many"+order+"do you want" , "")
+        while(true){
+          numberofitems=prompt("please enter a number of items you want (1-10):");
+          if((numberofitems&&numberofitems>=1&& numberofitems<=10)){
+            break; }
+            else{
+              alert("invlid quanity. enter a number between 1-10.");
+            }
+          }
 
         document.writeln(name+ "You ordered "+ numofitems + order);
+
+      
 
         let currentDate =new Date();
 
@@ -59,7 +68,6 @@
 
     </script>
 </head>
-
 <body>
    
 </body>
