@@ -30,11 +30,11 @@
 
         name = window.prompt("Please enter your Name " , "name");
         if(hour < 12){
-            document.write("<h1> Good Morning")
+            document.write("<h1> Good Morning ")
         }else if(hour < 18){
-            document.write("<h1> Good Afternoon")
+            document.write("<h1> Good Afternoon ")
         }else{
-            document.write("<h1> Good Evening")
+            document.write("<h1> Good Evening ")
         }
         document.writeln(name + ", Welcome to My Store!</h1>")
 
@@ -43,15 +43,15 @@
 
         var numofitems;
         while(true){
-          numberofitems= prompt("please enter a number of items you want (1-10):")
-          if((numberofitems&&numberofitems>=1&& numberofitems<=10)){
+          numofitems= prompt("please enter a number of items you want (1-10):")
+          if((numofitems&&numofitems>=1&& numofitems<=10)){
             break; }
             else{
-              alert("invlid quanity. enter a number between 1-10.");
+              alert("invalid quanity. enter a number between 1-10.");
             }
           }
 
-        document.writeln(name+ "<h1>You ordered "+ numofitems + order+ " ");
+        document.writeln(name+ "You ordered "+ numofitems + order + " ");
 
       
 
