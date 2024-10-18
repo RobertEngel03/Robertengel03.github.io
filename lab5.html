@@ -3,8 +3,7 @@
 
 
 
-   <script>
-
+  <script>      
 <head>
 <div class="jumbotron" style="background-color:rgb(145, 145, 145); padding: 8px; border-radius: 10px;">
     <h1 class="display-4"style="color:Blue;padding: 8px; border-radius:10px ;">Login</h1>
@@ -72,24 +71,27 @@
               Agree to terms and conditions
             </label>
             <div class="invalid-feedback">
-              You must agree before submitting.
+              (You must agree before submitting.)
             </div>
           </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit form</button>
-      </form>
-
       <script>
         function submitForm(){
-            var elements= document.getElementById("myForm"). elements ;
-            var elementsArr1=Array.from(elements);
+            var elements = document.getElementbyId("myform").elements;
+            var elemsArr1 = Array.from(element);
             var submission={};
-            elementsArr
+           elemsArr1.forEach((element) => console.log(element.name +""+ element.value));
+
         }
-     
     </script>
-    </html>
-    </div>
     </head>
-  </body>
-</body>
+
+    <body>
+       
+    </body>
+
+    
+
+
+      
