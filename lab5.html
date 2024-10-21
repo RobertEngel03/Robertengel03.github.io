@@ -77,46 +77,46 @@
         </div>
         
         <button class="btn btn-primary" type="submit">Submit form</button>
-        <div id="registrationMessage"></div>
+        <div id="registrationMessage">
 
-        <!-- This is where we'll display the user information -->
-        <div id="userInfo"></div>
-    
-        <script>
-            // Simple user object example
-            const User = {
-                name: "",
-                email: "",
-                age: 25,
-                registrationStatus: true // true means registration was successful, false means it failed
-            };
-    
-            // Function to display registration status and user info
-            function displayRegistrationStatus(user) {
-                const messageElement = document.getElementById("registrationMessage");
-                const userInfoElement = document.getElementById("userInfo");
-    
-                // Check the registration status
-                if (user.registrationStatus) {
-                    messageElement.textContent = "Registration Successful!";
-                } else {
-                    messageElement.textContent = "Registration Failed!";
-                }
-    
-                // Display user info regardless of registration status
-                userInfoElement.innerHTML = `
-                    <p>Name: ${user.name}</p>
-                    <p>Email: ${user.email}</p>
-                    <p>Age: ${user.age}</p>
-                `;
+            <div id="statusContainer"></div>
+
+          
+            <p id="message"></p>
+
+          
+            <script>
                 
-            }
-            
-            
- 
-
-
-    
-
-
+                const correctUsername = "";
+                const correctPassword = "";
+        
+               
+                function validateLogin() {
+                   
+                    const inputUsername = document.getElementById("username").value;
+                    const inputPassword = document.getElementById("password").value;
+                    const messageElement = document.getElementById("message");
+        
+                    
+                    if (inputUsername === correctUsername && inputPassword === correctPassword) {
+                        messageElement.textContent = "Login successful! Welcome.";
+                        messageElement.style.color = "green";
+                    } else if (inputUsername !== correctUsername) {
+                        messageElement.textContent = "Invalid username.";
+                        messageElement.style.color = "red";
+                    } else if (inputPassword !== correctPassword) {
+                        messageElement.textContent = "Invalid password.";
+                        messageElement.style.color = "red";
+                    } else {
+                        messageElement.textContent = "Invalid login credentials.";
+                        messageElement.style.color = "red";
+                    }
+                }
+            </script>
+           
       
+    
+    </form>
+     </div>
+     </body>
+</html>
