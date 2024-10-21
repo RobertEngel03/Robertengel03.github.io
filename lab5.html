@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"
-
-
-
-  <script>      
-<head>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="veiwport"content="width=device-width, initialscale=1.0"> 
+  </head>  
+  <body>
 <div class="jumbotron" style="background-color:rgb(145, 145, 145); padding: 8px; border-radius: 10px;">
     <h1 class="display-4"style="color:Blue;padding: 8px; border-radius:10px ;">Login</h1>
     <h1><img src="https://wallpaperaccess.com/full/1580037.jpg"width="320"height="330"></h1>
@@ -75,21 +75,46 @@
             </div>
           </div>
         </div>
+        
         <button class="btn btn-primary" type="submit">Submit form</button>
-      <script>
-        function submitForm(){
-            var elements = document.getElementbyId("myform").elements;
-            var elemsArr1 = Array.from(element);
-            var submission={};
-           elemsArr1.forEach((element) => console.log(element.name +""+ element.value));
+        <div id="registrationMessage"></div>
 
-        }
-    </script>
-    </head>
+        <!-- This is where we'll display the user information -->
+        <div id="userInfo"></div>
+    
+        <script>
+            // Simple user object example
+            const User = {
+                name: "",
+                email: "",
+                age: 25,
+                registrationStatus: true // true means registration was successful, false means it failed
+            };
+    
+            // Function to display registration status and user info
+            function displayRegistrationStatus(user) {
+                const messageElement = document.getElementById("registrationMessage");
+                const userInfoElement = document.getElementById("userInfo");
+    
+                // Check the registration status
+                if (user.registrationStatus) {
+                    messageElement.textContent = "Registration Successful!";
+                } else {
+                    messageElement.textContent = "Registration Failed!";
+                }
+    
+                // Display user info regardless of registration status
+                userInfoElement.innerHTML = `
+                    <p>Name: ${user.name}</p>
+                    <p>Email: ${user.email}</p>
+                    <p>Age: ${user.age}</p>
+                `;
+                
+            }
+            
+            
+ 
 
-    <body>
-       
-    </body>
 
     
 
