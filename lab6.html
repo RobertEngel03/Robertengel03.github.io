@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>API test</title>
   </head>
   <body>
     
-    
+    <head>
         <div class="jumbotron" style="background-color: antiquewhite;"style="color:darkgreen;">
         <h1 class="display-4"style="color:black;padding: 8px;px; border-radius:10px ;">API Tester</h1>
        
@@ -31,9 +31,58 @@
                 <li>
                   <a class="nav-link"href="lab5.html">Lab5</a>
                 </li>
-
-                <button type="button" class="btn btn-primary">confirm</button>
+        </head>
+                <head>
+                  <style>
+                    .cat-image {
+                        height: 60%;
+                        width: 60%;
+                        margin: 20px;
+                        border: 2px solid #ccc;
+                        border-radius: 8px;
+                    }
+            
+                    table {
+                        width: 80%;
+                        margin: auto;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+            
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: center;
+                    }
+            
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+            
+                <div id="img"></div>
+            
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            
+                <button onclick="handleApiButton()">Fetch Cat Facts</button>
+                
+              
+            </head>
         <script>
+            async function handleApiButton() {
+                
+            }
                     const url='https://brianobruno.github.io/cats.json';
                     const options=
                     {
@@ -44,6 +93,20 @@
                     const result=await
                     response.text();
                     const myObj= JSON.parse(result);
+
+                   let newUrl=myObj["cat photo"]
+                    document.getElementById("img").innerHTML=myObj;
+
+                    let array= myObj["facts"]
+                    array.sort((a,b)=> a.factId-b.fcatId);
+
+                    for (let i = 0; i < array.length; i++) {
+                    document.getElementById("table").innerHTML +='<tr><th scope="row">' + array[i].factId + "</td><td>" + array[i].text +"</td></tr>";
+                }
+
+
+
+
         </script>
                 
 
