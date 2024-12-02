@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Bootstrap CSS -->
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
@@ -9,69 +9,109 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Not Your Average-DEX</title>
+  <title>Pokémon Fetcher</title>
 </head>
-<body style="background-image:;">
 
-    <!-- Navbar -->
+<body style="background-color: black; color: white;">
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Pokémon Finder</a>
+        <a class="navbar-brand" href="AverageDex.html">Pokémon Finder</a>
+        <a class="navbar-brand" href="">Statistics(IV)</a>
     </nav>
     
-    <!-- Jumbotron -->
-    <div class="jumbotron text-center">
-        <h1 class="display-4" style="color: blue; padding: 8px; border-radius: 10px;">Pokémon Fetcher</h1>
-        <p class="lead" style="color: white;">Enter a Pokémon ID or Name to fetch its details from PokéAPI!</p>
+    <div class="jumbotron text-center" style="padding:8px;border-radius:10px;">
+        <h1 class="display-4" style="color: blue;">Pokémon Fetcher</h1>
+        <p class="lead" style="color: rgb(53, 8, 253);">Enter a Pokémon ID From 1-1025 or Search by Name</p>
         <hr class="my-4">
         <div class="container">
-            <input id="pokemonInput" type="text" class="form-control" placeholder="Enter Pokémon ID or Name">
-            <button id="fetchPokemonButton" class="btn btn-primary btn-lg mt-3">Pokémon</button>
+            <input id="pokemonSearch" type="text" class="form-control" placeholder="Enter Pokémon ID or type to search name" oninput="handleSearchInput()">
+            <button class="btn btn-primary btn-lg mt-3" onclick="searchPokemon()">Search Pokémon</button>
+            <div id="searchSuggestions" class="list-group mt-2"></div>
         </div>
     </div>
 
-    <!-- Pokémon Details Display -->
     <div class="container mt-4">
-        <div id="pokemonDetails" class="text-center text-white"></div>
+        <div id="pokemonDetails" class="text-center"></div>
     </div>
 
     <script>
-        // Function to fetch Pokémon data
-        async function fetchPokemonData() {
-            var input = document.getElementById("pokemonInput").value.trim();
-            var url = "https://pokeapi.co/api/v2/pokemon/" + input;
+        let pokemonList = [];
 
-            var detailsDiv = document.getElementById("pokemonDetails");
-            detailsDiv.innerHTML = ""; 
+        async function fetchPokemonList() {
+            const searchSuggestions = document.getElementById("searchSuggestions");
+            searchSuggestions.innerHTML = '<div class="list-group-item">Loading Pokémon list...</div>';
 
-            if (!input) {
-                detailsDiv.innerHTML = '<p class="text-danger">Please enter a Pokémon ID or Name.</p>';
+            try {
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
+                const data = await response.json();
+                pokemonList = data.results;
+
+                searchSuggestions.innerHTML = '<div class="list-group-item">Type to search Pokémon by name...</div>';
+            } catch (error) {
+                console.error("Error fetching Pokémon list:", error);
+                searchSuggestions.innerHTML = '<div class="list-group-item text-danger">Error loading list</div>';
+            }
+        }
+
+        function handleSearchInput() {
+            const query = document.getElementById("pokemonSearch").value.trim();
+            const searchSuggestions = document.getElementById("searchSuggestions");
+
+            if (!query) {
+                searchSuggestions.innerHTML = '<div class="list-group-item">Type to search Pokémon by name...</div>';
                 return;
             }
 
+            if (!isNaN(query)) {
+
+                searchSuggestions.innerHTML = '';
+                return;
+            }
+
+            const filtered = pokemonList.filter(pokemon => pokemon.name.includes(query.toLowerCase()));
+
+            searchSuggestions.innerHTML = '';
+            if (filtered.length === 0) {
+                searchSuggestions.innerHTML = '<div class="list-group-item text-warning">No matches found</div>';
+                return;
+            }
+
+            filtered.forEach(pokemon => {
+                const suggestion = document.createElement("div");
+                suggestion.className = "list-group-item list-group-item-action";
+                suggestion.textContent = pokemon.name;
+                suggestion.onclick = () => fetchPokemonData(pokemon.name);
+                searchSuggestions.appendChild(suggestion);
+            });
+        }
+
+        async function fetchPokemonData(input) {
+            const url = "https://pokeapi.co/api/v2/pokemon/" + input;
+            const detailsDiv = document.getElementById("pokemonDetails");
+            detailsDiv.innerHTML = "";
+
             try {
-                var response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Pokémon not found. HTTP status: " + response.status);
-                }
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Pokémon not found");
 
-                var data = await response.json();
-
-                
-                var detailsHtml = '<h2>' + data.name.toUpperCase() + '</h2>';
-                detailsHtml += '<img src="' + data.sprites.front_default + '" alt="' + data.name + '" class="img-fluid">';
-                detailsHtml += '<p><strong>Height:</strong> ' + data.height + '</p>';
-                detailsHtml += '<p><strong>Weight:</strong> ' + data.weight + '</p>';
-                detailsHtml += '<p><strong>Types:</strong> ' + data.types.map(function(type) {
-                    return type.type.name;
-                }).join(", ") + '</p>';
-                detailsDiv.innerHTML = detailsHtml;
+                const data = await response.json();
+                detailsDiv.innerHTML =
+                    '<h2>' + data.name.toUpperCase() + '</h2>' +
+                    '<img src="' + data.sprites.front_default + '" alt="' + data.name + '" class="img-fluid">' +
+                    '<p><strong>Height:</strong> ' + data.height + '</p>' +
+                    '<p><strong>Weight:</strong> ' + data.weight + '</p>' +
+                    '<p><strong>Types:</strong> ' + data.types.map(type => type.type.name).join(", ") + '</p>';
             } catch (error) {
                 detailsDiv.innerHTML = '<p class="text-danger">Error: ' + error.message + '</p>';
             }
         }
 
-        // Attach event listener to the button
-        document.getElementById("fetchPokemonButton").addEventListener("click", fetchPokemonData);
+        function searchPokemon() {
+            const query = document.getElementById("pokemonSearch").value.trim();
+            fetchPokemonData(query);
+        }
+
+        fetchPokemonList(); // Fetch Pokémon list on page load
     </script>
 </body>
 </html>
