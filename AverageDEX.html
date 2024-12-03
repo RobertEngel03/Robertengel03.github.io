@@ -19,8 +19,8 @@
 
     .pokemon-font {
       font-family: 'Pokemon', sans-serif;
-      color: rgb(253, 253, 5);
-      text-shadow: 4px 4px 4px rgb(28, 3, 255);
+      color: rgb(254, 254, 2);
+      text-shadow: 4px 4px 4px rgb(1, 74, 246);
     }
   </style>
 </head>
@@ -30,14 +30,14 @@
     background-size: cover; 
     background-repeat: no-repeat; 
     background-position: center; 
-    color: white;">
+    color: rgb(255, 255, 255);">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="AverageDex.html">Pokémon Finder</a>
         <a class="navbar-brand" href="">Statistics(IV)</a>
     </nav>
     
-    <div class="jumbotron text-center" style=" background: rgba(155, 155, 155, 0.8);">
+    <div class="jumbotron text-center" style=" background: rgba(136, 136, 136, 0.486);">
         <h1 class="display-4 pokemon-font">Pokémon Fetcher</h1>
         <p class="lead" style="color: rgb(53, 8, 253);">Enter a Pokémon ID From 1-1025 or Search by Name</p>
         <hr class="my-4">
@@ -127,14 +127,14 @@
 
                 // Render Pokémon details
                 detailsDiv.innerHTML =
-                    "<h2>" + pokemonData.name.toUpperCase() + "</h2>" +
-                    '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid">' +
-                    "<p><strong>Height:</strong> " + pokemonData.height + "</p>" +
-                    "<p><strong>Weight:</strong> " + pokemonData.weight + "</p>" +
-                    "<p><strong>Types:</strong> " + pokemonData.types.map(function(type) { return type.type.name; }).join(", ") + "</p>" +
-                    "<p><strong>Evolutions:</strong><br>" + evolutionDetails + "</p>";
+                    "<h2 style='font-size: 3rem; font-weight: bold;'>" + pokemonData.name.toUpperCase() + "</h2>" +
+                    '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid" style="width: 200px; height: 200px;">' +
+                    "<p style='font-size: 1.5rem;'><strong>Height:</strong> " + pokemonData.height + "</p>" +
+                    "<p style='font-size: 1.5rem;'><strong>Weight:</strong> " + pokemonData.weight + "</p>" +
+                    "<p style='font-size: 1.5rem;'><strong>Types:</strong> " + pokemonData.types.map(function(type) { return type.type.name; }).join(", ") + "</p>" +
+                    "<p style='font-size: 1.5rem;'><strong>Evolutions:</strong><br>" + evolutionDetails + "</p>";
             } catch (error) {
-                detailsDiv.innerHTML = '<p class="text-danger">Error: ' + error.message + "</p>";
+                detailsDiv.innerHTML = '<p class="text-danger" style="font-size: 1.5rem;">Error: ' + error.message + "</p>";
             }
         }
 
@@ -166,7 +166,7 @@
             fetchPokemonData(query);
         }
 
-        fetchPokemonList(); // Fetch Pokémon list on page load
+        fetchPokemonList(); 
     </script>
 </body>
 </html>
