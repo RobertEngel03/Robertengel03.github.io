@@ -10,17 +10,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pokémon Fetcher</title>
+
+  <style>
+    @font-face {
+      font-family: 'Pokemon';
+      src: url('fonts/PokemonSolid.ttf') format('truetype');
+    }
+
+    .pokemon-font {
+      font-family: 'Pokemon', sans-serif;
+      color: white; /* Remove the blue coloring */
+      text-shadow: 2px 2px 4px black; /* Optional shadow for better visibility */
+    }
+  </style>
 </head>
 
-<body style="background-color: black; color: white;">
+<body style="
+    background-image: url('https://wallpapercave.com/wp/wp8797773.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    color: white;">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="AverageDex.html">Pokémon Finder</a>
         <a class="navbar-brand" href="">Statistics(IV)</a>
     </nav>
     
-    <div class="jumbotron text-center" style="padding:8px;border-radius:10px;">
-        <h1 class="display-4" style="color: blue;">Pokémon Fetcher</h1>
+    <div class="jumbotron text-center" style=" background: rgba(155, 155, 155, 0.8);">
+        <h1 class="display-4 pokemon-font">Pokémon Fetcher</h1>
         <p class="lead" style="color: rgb(53, 8, 253);">Enter a Pokémon ID From 1-1025 or Search by Name</p>
         <hr class="my-4">
         <div class="container">
@@ -63,7 +81,6 @@
             }
 
             if (!isNaN(query)) {
-
                 searchSuggestions.innerHTML = '';
                 return;
             }
