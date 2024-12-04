@@ -35,7 +35,7 @@
     background-size: cover; 
     background-repeat: no-repeat; 
     background-position: center; 
-    color: rgb(255, 255, 255);">
+    color: rgb(0, 94, 255);">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.html">HOME</a>
@@ -133,6 +133,8 @@
 
                 
                 detailsDiv.innerHTML =
+                '<div class="card mx-auto mt-4" style="max-width: 600px; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);">' +
+                    '<div class="card-body">' +
                     "<h2 style='font-size: 3rem; font-weight: bold;'>" + pokemonData.name.toUpperCase() + "</h2>" +
                     '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid" style="width: 200px; height: 200px;">' +
                     "<p style='font-size: 1.5rem;'><strong>Height:</strong> " + pokemonData.height + "</p>" +
@@ -173,6 +175,9 @@
         }
 
         fetchPokemonList(); 
+
+    
     </script>
 </body>
 </html>
+<footer class="pokemon-text"> Robert Engel| Not Your AverageDEX |Nov. 28th</footer>
