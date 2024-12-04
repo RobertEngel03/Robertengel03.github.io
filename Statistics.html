@@ -21,6 +21,7 @@
             background-size: cover; 
             background-repeat: no-repeat; 
             background-position: center; 
+            background-attachment: fixed; 
             color: rgb(0, 0, 0); 
         }
         .navbar {
@@ -147,7 +148,10 @@
             const listItem = document.createElement("div");
             listItem.className = "list-group-item pokemon-item";
             listItem.textContent = (index + 1) + ". " + pokemon.name;
-            listItem.onclick = function() { fetchPokemonStats(pokemon.name); };
+            listItem.onclick = function() { 
+                fetchPokemonStats(pokemon.name); 
+                pokemonListDiv.innerHTML = ""; 
+            };
             pokemonListDiv.appendChild(listItem);
         });
     }
@@ -229,7 +233,6 @@
     }
 
     fetchPokemonList();
-    
 </script>
 </body>
 </html>
