@@ -32,17 +32,17 @@
       background-size: cover; 
       background-repeat: no-repeat; 
       background-position: center; 
-      background-attachment: fixed; 
+      background-attachment: fixed;
       color: rgb(0, 94, 255);
     }
 
     .list-group {
-      max-height: 300px; 
-      overflow-y: auto; 
+      max-height: 300px;
+      overflow-y: auto;
     }
 
     .list-group-item {
-      cursor: pointer; 
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
@@ -170,7 +170,7 @@
                 suggestion.textContent = pokemon.name;
                 suggestion.onclick = function() { 
                     fetchPokemonData(pokemon.name); 
-                    searchSuggestions.innerHTML = ''; 
+                    searchSuggestions.innerHTML = ''; // Hide suggestions when a Pokémon is selected
                 };
                 searchSuggestions.appendChild(suggestion);
             });
@@ -185,6 +185,16 @@
                 if (!pokemonResponse.ok) throw new Error("Pokémon not found");
                 const pokemonData = await pokemonResponse.json();
 
+                const speciesResponse = await fetch(pokemonData.species.url);
+                if (!speciesResponse.ok) throw new Error("Pokémon species data not found");
+                const speciesData = await speciesResponse.json();
+
+                const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+                if (!evolutionResponse.ok) throw new Error("Evolution chain not found");
+                const evolutionData = await evolutionResponse.json();
+
+                const evolutionDetails = getEvolutionChain(evolutionData.chain);
+
                 detailsDiv.innerHTML =
                     '<div class="card mx-auto mt-4" style="max-width: 600px; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);">' +
                     '<div class="card-body">' +
@@ -192,10 +202,33 @@
                     '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid" style="width: 200px; height: 200px;">' +
                     "<p style='font-size: 1.5rem;'><strong>Height:</strong> " + pokemonData.height + "</p>" +
                     "<p style='font-size: 1.5rem;'><strong>Weight:</strong> " + pokemonData.weight + "</p>" +
-                    "<p style='font-size: 1.5rem;'><strong>Types:</strong> " + pokemonData.types.map(function(type) { return type.type.name; }).join(", ") + "</p>";
+                    "<p style='font-size: 1.5rem;'><strong>Types:</strong> " + pokemonData.types.map(type => type.type.name).join(", ") + "</p>" +
+                    "<p style='font-size: 1.5rem;'><strong>Evolutions:</strong><br>" + evolutionDetails + "</p>";
             } catch (error) {
                 detailsDiv.innerHTML = '<p class="text-danger" style="font-size: 1.5rem;">Error: ' + error.message + "</p>";
             }
+        }
+
+        function getEvolutionChain(chain) {
+            let evolutions = [];
+            let current = chain;
+
+            while (current) {
+                const name = current.species.name;
+                const details = current.evolution_details[0];
+                let requirement = "";
+
+                if (details) {
+                    if (details.min_level) requirement += " (Level " + details.min_level + ")";
+                    if (details.item) requirement += " (Item: " + details.item.name + ")";
+                    if (details.trigger) requirement += " (Trigger: " + details.trigger.name + ")";
+                }
+
+                evolutions.push(name + requirement);
+                current = current.evolves_to[0] || null;
+            }
+
+            return evolutions.join(" → ");
         }
 
         fetchPokemonList();
