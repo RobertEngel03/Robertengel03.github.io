@@ -11,7 +11,7 @@
   <title>Not Your AverageDEX</title>
 
   <style>
-   @font-face {
+    @font-face {
       font-family: 'Pokemon';
       src: url('path-to-pokemon-font.ttf'); 
     }
@@ -170,7 +170,7 @@
                 suggestion.textContent = pokemon.name;
                 suggestion.onclick = function() { 
                     fetchPokemonData(pokemon.name); 
-                    searchSuggestions.innerHTML = ''; // Hide suggestions when a Pokémon is selected
+                    searchSuggestions.innerHTML = ''; 
                 };
                 searchSuggestions.appendChild(suggestion);
             });
@@ -229,6 +229,11 @@
             }
 
             return evolutions.join(" → ");
+        }
+
+        function searchPokemon() {
+            const query = document.getElementById("pokemonSearch").value.trim().toLowerCase();
+            fetchPokemonData(query); 
         }
 
         fetchPokemonList();
