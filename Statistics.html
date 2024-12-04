@@ -21,11 +21,32 @@
             background-size: cover; 
             background-repeat: no-repeat; 
             background-position: center; 
-            color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0); 
         }
         .navbar {
             background-color: rgba(255, 255, 255, 0.9);
         }
+        .pokemon-stats img {
+            max-width: 250px; 
+            max-height: 250px;
+        }
+        .stat-card {
+            margin-top: 15px;
+        }
+    
+        
+    @font-face {
+      font-family: 'Pokemon';
+      src: url('fonts/PokemonSolid.ttf') format('truetype');
+    }
+
+    .pokemon-font {
+      font-family: 'Pokemon', sans-serif;
+      color: rgb(254, 254, 2);
+      text-shadow: 4px 4px 4px rgb(1, 74, 246);
+    }
+  </style>
+    
     </style>
 </head>
 <body>
@@ -35,7 +56,7 @@
 </nav>
 
 <div class="container mt-4">
-    <h1 class="text-center">Pokémon Stats Viewer</h1>
+    <h1 class="text-center"style="">Pokémon Stats Viewer</h1>
     <div class="row mt-4">
         <div class="col-md-4">
             <h3 class="text-center">Pokémon List</h3>
@@ -44,7 +65,7 @@
         </div>
         <div class="col-md-8">
             <h3 class="text-center">Pokémon Stats</h3>
-            <div id="pokemonStats" class="p-3 bg-white border rounded"></div>
+            <div id="pokemonStats" class="p-3 bg-white border rounded pokemon-stats"></div>
         </div>
     </div>
 </div>
@@ -54,7 +75,7 @@
     const pokemonStatsDiv = document.getElementById("pokemonStats");
     const searchInput = document.getElementById("searchInput");
 
-    let allPokemon = []; // Store all Pokémon data
+    let allPokemon = []; 
 
     async function fetchPokemonList() {
         try {
@@ -88,18 +109,50 @@
             const statsHTML = pokemonData.stats
                 .map(function(stat) {
                     return (
-                        "<p><strong>" + stat.stat.name.toUpperCase() + ":</strong> " + stat.base_stat + "</p>"
+                        '<div class="card stat-card">' +
+                        '<div class="card-body">' +
+                        "<p><strong>" + stat.stat.name.toUpperCase() + ":</strong> " + stat.base_stat + "</p>" +
+                        "</div></div>"
                     );
                 })
                 .join("");
 
+            const movesHTML = await getMovesHTML(pokemonData.moves);
+
             pokemonStatsDiv.innerHTML =
-                "<h4>" + pokemonData.name.toUpperCase() + "</h4>" +
+                '<div class="d-flex justify-content-center">' +
                 '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid mb-3">' +
-                statsHTML;
+                "</div>" +
+                "<h4 class='text-center'>" + pokemonData.name.toUpperCase() + "</h4>" +
+                "<h5>Base Stats:</h5>" +
+                statsHTML +
+                "<h5>Moves Learned at Each Level:</h5>" +
+                movesHTML;
         } catch (error) {
             pokemonStatsDiv.innerHTML = '<p class="text-danger">Error: ' + error.message + "</p>";
         }
+    }
+
+    async function getMovesHTML(moves) {
+        const levelUpMoves = moves.filter(function(move) {
+            return move.version_group_details.some(function(detail) {
+                return detail.move_learn_method.name === "level-up";
+            });
+        });
+
+        const movesByLevel = levelUpMoves.map(function(move) {
+            const levelDetails = move.version_group_details.find(function(detail) {
+                return detail.move_learn_method.name === "level-up";
+            });
+            return (
+                '<div class="card stat-card">' +
+                '<div class="card-body">' +
+                "<p><strong>" + move.move.name + "</strong>: Learned at Level " + levelDetails.level_learned_at + "</p>" +
+                "</div></div>"
+            );
+        });
+
+        return movesByLevel.join("");
     }
 
     function handleSearch() {
@@ -109,7 +162,6 @@
             return;
         }
 
-       
         const filteredPokemon = allPokemon.filter(function(pokemon, index) {
             return (
                 pokemon.name.toLowerCase().includes(query) ||
@@ -124,7 +176,6 @@
         }
     }
 
-    
     fetchPokemonList();
 </script>
 </body>
