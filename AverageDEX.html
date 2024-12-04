@@ -9,18 +9,23 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokémon Fetcher</title>
+  <title>Pokémon Finder</title>
 
   <style>
-    @font-face {
+   @font-face {
       font-family: 'Pokemon';
-      src: url('fonts/PokemonSolid.ttf') format('truetype');
+      src: url('path-to-pokemon-font.ttf'); 
     }
 
-    .pokemon-font {
+    .pokemon-text {
       font-family: 'Pokemon', sans-serif;
-      color: rgb(254, 254, 2);
-      text-shadow: 4px 4px 4px rgb(1, 74, 246);
+      font-size: 2rem;
+      color: rgb(245, 225, 0); 
+      text-shadow:
+        -1px -1px 0 rgb(0, 0, 255),  
+        1px -1px 0 rgb(0, 0, 255),   
+        -1px 1px 0 rgb(0, 0, 255),  
+        1px 1px 0 rgb(0, 0, 255);    
     }
   </style>
 </head>
@@ -33,13 +38,14 @@
     color: rgb(255, 255, 255);">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">HOME</a>
         <a class="navbar-brand" href="AverageDex.html">Pokémon Finder</a>
         <a class="navbar-brand" href="Statistics.html">Statistics(IV)</a>
     </nav>
     
     <div class="jumbotron text-center" style=" background: rgba(136, 136, 136, 0.486);">
-        <h1 class="display-4 pokemon-font">Pokémon Fetcher</h1>
-        <p class="lead" style="color: rgb(53, 8, 253);">Enter a Pokémon ID From 1-1025 or Search by Name</p>
+        <h1 class="display-4 pokemon-text">Pokémon Finder</h1>
+        <p class="pokemon-text" style="color: rgb(245, 225, 0);">Enter a Pokémon ID From 1-1025 or Search by Name</p>
         <hr class="my-4">
         <div class="container">
             <input id="pokemonSearch" type="text" class="form-control" placeholder="Enter Pokémon ID or type to search name" oninput="handleSearchInput()">
@@ -107,25 +113,25 @@
             detailsDiv.innerHTML = "";
 
             try {
-                // Fetch Pokémon data
+                
                 const pokemonResponse = await fetch("https://pokeapi.co/api/v2/pokemon/" + input);
                 if (!pokemonResponse.ok) throw new Error("Pokémon not found");
                 const pokemonData = await pokemonResponse.json();
 
-                // Fetch species data for evolution chain URL
+                
                 const speciesResponse = await fetch(pokemonData.species.url);
                 if (!speciesResponse.ok) throw new Error("Pokémon species data not found");
                 const speciesData = await speciesResponse.json();
 
-                // Fetch evolution chain data
+                
                 const evolutionResponse = await fetch(speciesData.evolution_chain.url);
                 if (!evolutionResponse.ok) throw new Error("Evolution chain not found");
                 const evolutionData = await evolutionResponse.json();
 
-                // Parse evolution chain
+                
                 const evolutionDetails = getEvolutionChain(evolutionData.chain);
 
-                // Render Pokémon details
+                
                 detailsDiv.innerHTML =
                     "<h2 style='font-size: 3rem; font-weight: bold;'>" + pokemonData.name.toUpperCase() + "</h2>" +
                     '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '" class="img-fluid" style="width: 200px; height: 200px;">' +
@@ -138,7 +144,7 @@
             }
         }
 
-        // Helper function to parse evolution chain
+        
         function getEvolutionChain(chain) {
             let evolutions = [];
             let current = chain;

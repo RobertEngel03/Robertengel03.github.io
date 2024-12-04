@@ -34,37 +34,48 @@
             margin-top: 15px;
         }
     
-        
-    @font-face {
-      font-family: 'Pokemon';
-      src: url('fonts/PokemonSolid.ttf') format('truetype');
-    }
+        @font-face {
+            font-family: 'Pokemon';
+            src: url('path-to-pokemon-font.ttf'); 
+        }
 
-    .pokemon-font {
-      font-family: 'Pokemon', sans-serif;
-      color: rgb(254, 254, 2);
-      text-shadow: 4px 4px 4px rgb(1, 74, 246);
-    }
-  </style>
-    
+        .pokemon-text {
+            font-family: 'Pokemon', sans-serif;
+            font-size: 2rem;
+            color: rgb(245, 225, 0); 
+            text-shadow:
+                -1px -1px 0 rgb(0, 0, 255),  
+                1px -1px 0 rgb(0, 0, 255),   
+                -1px 1px 0 rgb(0, 0, 255),  
+                1px 1px 0 rgb(0, 0, 255);    
+        }
+
+        .center-text {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
+   <a class="navbar-brand" href="index.html">HOME</a>
     <a class="navbar-brand" href="AverageDex.html">Pokémon Finder</a>
     <a class="navbar-brand" href="Statistics.html">Statistics (IV)</a>
 </nav>
 
+<div class="container mt-4 text-center">
+    <h1 class="pokemon-text center-text">Pokémon Stats Viewer</h1>
+    <p class="pokemon-text center-text">Find your favorite Pokémon's stats!</p>
+</div>
+
 <div class="container mt-4">
-    <h1 class="text-center"style="">Pokémon Stats Viewer</h1>
     <div class="row mt-4">
         <div class="col-md-4">
-            <h3 class="text-center">Pokémon List</h3>
+            <h3 class="pokemon-text">Pokémon List</h3>
             <input id="searchInput" type="text" class="form-control mb-3" placeholder="Search by ID or Name" oninput="handleSearch()">
             <div class="list-group pokemon-list" id="pokemonList"></div>
         </div>
         <div class="col-md-8">
-            <h3 class="text-center">Pokémon Stats</h3>
+            <h3 class="pokemon-text">Pokémon Stats</h3>
             <div id="pokemonStats" class="p-3 bg-white border rounded pokemon-stats"></div>
         </div>
     </div>
