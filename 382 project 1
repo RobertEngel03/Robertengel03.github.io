@@ -1,0 +1,68 @@
+#include <iostream>
+#include <ctime>
+#include <vector>
+
+using namespace std;
+
+int FiboR(int n) {
+    if (n == 0 || n == 1)
+        return n;
+    return FiboR(n - 1) + FiboR(n - 2);
+}
+
+int MODFibR(int n, vector<int> &memo) {
+    if (n == 0 || n == 1)
+        return n;
+    if (memo[n] != -1)
+        return memo[n];
+    return memo[n] = MODFibR(n - 1, memo) + MODFibR(n - 2, memo);
+}
+
+int FiboNR(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    
+    vector<int> F(n + 1);
+    F[0] = 0;
+    F[1] = 1;
+
+    for (int i = 2; i <= n; i++)
+        F[i] = F[i - 1] + F[i - 2];
+
+    return F[n];
+}
+
+int main() {
+    vector<int> test_cases = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
+
+    cout << "Fibonacci time analysis (recursive vs. non-recursive)" << endl;
+    cout << "Integer  FiboR (seconds)  MODFibR (seconds)  FiboNR (seconds)  Fibo-value" << endl;
+
+    for (int n : test_cases) {
+        clock_t start = clock();
+        int resultR = FiboR(n);
+        clock_t end = clock();
+        double timeR = double(end - start) / CLOCKS_PER_SEC;
+
+        vector<int> memo(n + 1, -1);
+        start = clock();
+        int resultMOD = MODFibR(n, memo);
+        end = clock();
+        double timeMOD = double(end - start) / CLOCKS_PER_SEC;
+
+        start = clock();
+        int resultNR = FiboNR(n);
+        end = clock();
+        double timeNR = double(end - start) / CLOCKS_PER_SEC;
+
+        if (resultMOD != resultNR) {
+            cout << "Error: Mismatch in Fibonacci calculation!" << endl;
+            return 1;
+        }
+
+        cout << n << "        " << timeR << "               " << timeMOD
+             << "              " << timeNR << "              " << resultMOD << endl;
+    }
+
+    return 0;
+}
